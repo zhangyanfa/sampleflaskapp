@@ -1,15 +1,20 @@
 from flask import Flask, render_template, json, request
 from flask.ext.mysql import MySQL
-from werkzeug import generate_password_hash, check_password_hash
+from werkzeug import generate_password_hash
+import os
+
 
 mysql = MySQL()
 app = Flask(__name__)
 
 # MySQL configurations
-app.config['MYSQL_DATABASE_USER'] = 'jay'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'jay'
-app.config['MYSQL_DATABASE_DB'] = 'BucketList'
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+app.config['MYSQL_DATABASE_USER'] = os.environ['MYSQL_USER']
+app.config['MYSQL_DATABASE_PASSWORD'] = os.environ['MYSQL_PASSWORD']
+app.config['MYSQL_DATABASE_DB'] = os.environ['MYSQL_DB']
+mysqlDbPort = os.environ['DB_PORT'].split(":")[2]
+app.config['MYSQL_DATABASE_PORT'] = int(mysqlDbPort)
+mysqlHostEnv = "DB_PORT_" + mysqlDbPort + "_TCP_ADDR"
+app.config['MYSQL_DATABASE_HOST'] = os.getenv(mysqlHostEnv)
 mysql.init_app(app)
 
 
@@ -31,9 +36,9 @@ def signUp():
 
         # validate the received values
         if _name and _email and _password:
-            
+
             # All Good, let's call MySQL
-            
+
             conn = mysql.connect()
             cursor = conn.cursor()
             _hashed_password = generate_password_hash(_password)
@@ -51,7 +56,7 @@ def signUp():
     except Exception as e:
         return json.dumps({'error':str(e)})
     finally:
-        cursor.close() 
+        cursor.close()
         conn.close()
 
 if __name__ == "__main__":
