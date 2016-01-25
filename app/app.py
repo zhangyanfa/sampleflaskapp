@@ -2,6 +2,7 @@ from flask import Flask, render_template, json, request
 from flask.ext.mysql import MySQL
 from werkzeug import generate_password_hash
 import os
+import re
 
 
 mysql = MySQL()
@@ -11,10 +12,14 @@ app = Flask(__name__)
 app.config['MYSQL_DATABASE_USER'] = os.environ['MYSQL_USER']
 app.config['MYSQL_DATABASE_PASSWORD'] = os.environ['MYSQL_PASSWORD']
 app.config['MYSQL_DATABASE_DB'] = os.environ['MYSQL_DB']
-mysqlDbPort = os.environ['DB_PORT'].split(":")[2]
-app.config['MYSQL_DATABASE_PORT'] = int(mysqlDbPort)
-mysqlHostEnv = "DB_PORT_" + mysqlDbPort + "_TCP_ADDR"
-app.config['MYSQL_DATABASE_HOST'] = os.getenv(mysqlHostEnv)
+for key in os.environ.keys():
+    if re.match(r'.*_TCP_PORT$',key):
+        mysqlDbPort = os.environ[key]
+        app.config['MYSQL_DATABASE_PORT'] = int(mysqlDbPort)
+    if re.match(r'.*_TCP_ADDR$',key):
+        mysqlDbHost = os.environ[key]
+        app.config['MYSQL_DATABASE_HOST'] = mysqlDbHost
+
 mysql.init_app(app)
 
 
