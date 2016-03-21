@@ -10,3 +10,6 @@ Explanation of the code is provided [here](http://code.tutsplus.com/tutorials/cr
 #Run
  docker run -itd -e MYSQL_USER=user -e MYSQL_PASSWORD=pass -e MYSQL_DB=test --link mysql:db  -p 8080:80 flaskapp
 
+#MySQL DB Setup
+Refer to db_setup file
+
