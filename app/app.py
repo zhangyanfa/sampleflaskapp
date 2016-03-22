@@ -7,6 +7,7 @@ import re
 
 mysql = MySQL()
 app = Flask(__name__)
+app.secret_key = 'some_secret_key'
 
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = os.environ['MYSQL_USER']
