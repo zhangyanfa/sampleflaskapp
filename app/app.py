@@ -14,10 +14,10 @@ app.config['MYSQL_DATABASE_USER'] = os.environ['MYSQL_USER']
 app.config['MYSQL_DATABASE_PASSWORD'] = os.environ['MYSQL_PASSWORD']
 app.config['MYSQL_DATABASE_DB'] = os.environ['MYSQL_DB']
 for key in os.environ.keys():
-    if re.match(r'.*_TCP_PORT$',key):
+    if re.match(r'MYSQL.*_TCP_PORT$',key):
         mysqlDbPort = os.environ[key]
         app.config['MYSQL_DATABASE_PORT'] = int(mysqlDbPort)
-    if re.match(r'.*_TCP_ADDR$',key):
+    if re.match(r'MYSQL.*_TCP_ADDR$',key):
         mysqlDbHost = os.environ[key]
         app.config['MYSQL_DATABASE_HOST'] = mysqlDbHost
 
