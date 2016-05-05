@@ -1,6 +1,6 @@
-CREATE DATABASE BucketList;
+CREATE DATABASE IF NOT EXISTS BucketList;
 
-CREATE TABLE `BucketList`.`tbl_user` (
+CREATE TABLE IF NOT EXISTS `BucketList`.`tbl_user` (
   `user_id` BIGINT NULL AUTO_INCREMENT,
   `user_name` VARCHAR(45) NULL,
   `user_username` VARCHAR(45) NULL,
@@ -49,7 +49,7 @@ END$$
 DELIMITER ;
 
 
-CREATE TABLE `BucketList`.`tbl_wish` (
+CREATE TABLE IF NOT EXISTS `BucketList`.`tbl_wish` (
   `wish_id` int(11) NOT NULL AUTO_INCREMENT,
   `wish_title` varchar(45) DEFAULT NULL,
   `wish_description` varchar(5000) DEFAULT NULL,
