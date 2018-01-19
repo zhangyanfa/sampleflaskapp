@@ -7,8 +7,8 @@ node {
     registryHost = "mycluster.icp:8500/"
     imageName = "${registryHost}${appName}:${env.BUILD_ID}"
     env.BUILDIMG=imageName
-    /*docker.withRegistry('https://mycluster.icp:8500/', 'docker'){
-    stage "Build"
+    docker.withRegistry('https://mycluster.icp:8500/', 'docker'){
+    /*stage "Build"
 
         def pcImg = docker.build("mycluster.icp:8500/default/flask-app:${env.BUILD_ID}", "-f Dockerfile.ppc64le .")
         sh "cp /root/.dockercfg ${HOME}/.dockercfg"
